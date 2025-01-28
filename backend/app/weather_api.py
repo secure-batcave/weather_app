@@ -55,6 +55,7 @@ async def get_current_weather(city: str, lat: float = None, lon: float = None) -
             "humidity": data["main"]["humidity"],
             "pressure": data["main"]["pressure"],
             "description": data["weather"][0]["description"],
+            "icon": data["weather"][0]["icon"],
             "latitude": data["coord"]["lat"],
             "longitude": data["coord"]["lon"],
             "country": data["sys"]["country"]
@@ -98,6 +99,7 @@ async def get_weather_forecast(city: str, lat: float = None, lon: float = None, 
                 "humidity": item["main"]["humidity"],
                 "pressure": item["main"]["pressure"],
                 "description": item["weather"][0]["description"],
+                "icon": item["weather"][0]["icon"],
                 "timestamp": datetime.fromtimestamp(item["dt"])
             })
         return forecasts

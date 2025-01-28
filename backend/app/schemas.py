@@ -31,6 +31,7 @@ class WeatherRecordBase(BaseModel):
     humidity: float = Field(..., ge=0, le=100) # Validation: Must be between 0 and 100
     pressure: float
     description: str
+    icon: str = Field(default="01d")  # Default to clear sky day icon
 
 # WeatherRecordCreate: Used for creating new weather records
 class WeatherRecordCreate(WeatherRecordBase):

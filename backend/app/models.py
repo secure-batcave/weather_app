@@ -37,6 +37,7 @@ class WeatherRecord(Base):
     humidity = Column(Float)
     pressure = Column(Float)
     description = Column(String)
+    icon = Column(String, default="01d")  # Default to clear sky day icon
     timestamp = Column(DateTime, default=datetime.utcnow)
     
     # WeatherRecord.location: Allows you to access the location details for a given weather record
@@ -54,6 +55,7 @@ class HistoricalWeatherRecord(Base):
     humidity = Column(Float)
     pressure = Column(Float)
     description = Column(String)
+    icon = Column(String, default="01d")  # Default to clear sky day icon
     timestamp = Column(DateTime, default=datetime.utcnow)
     query_timestamp = Column(DateTime)  # When the historical data was queried for
     

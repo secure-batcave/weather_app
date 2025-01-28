@@ -114,6 +114,7 @@ def export_weather_data(db: Session, city: Optional[str] = None) -> List[dict]:
             "humidity": record.humidity,
             "pressure": record.pressure,
             "description": record.description,
+            "icon": record.icon,
             "timestamp": record.timestamp.isoformat()
         }
         for record in records

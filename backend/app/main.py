@@ -71,7 +71,8 @@ async def get_current_weather(
                 temperature=weather_data["temperature"],
                 humidity=weather_data["humidity"],
                 pressure=weather_data["pressure"],
-                description=weather_data["description"]
+                description=weather_data["description"],
+                icon=weather_data["icon"]
             ))
         
         return weather_data
@@ -173,6 +174,7 @@ async def get_historical_weather(
             humidity=weather_data["humidity"],
             pressure=weather_data["pressure"],
             description=weather_data["description"],
+            icon=weather_data["icon"],
             query_timestamp=datetime.fromtimestamp(timestamp),
             timestamp=datetime.utcnow()
         ))

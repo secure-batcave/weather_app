@@ -43,7 +43,22 @@ OPENWEATHER_API_KEY=your_api_key_here
 3. Start the application:
 ```bash
 pwd # should be weather_app
-docker compose up -d
+sudo docker compose up -d
+```
+
+Shut down the application:
+```bash
+sudo docker compose down
+```
+
+Shut down the application and remove the database container:
+```bash
+sudo docker compose down -v
+```
+
+Rebuild the images:
+```bash
+sudo docker compose up --build -d
 ```
 
 The application will be available at:
@@ -106,6 +121,7 @@ A modern React application built with Next.js 14, featuring a responsive UI desi
 A PostgreSQL database containerized with Docker, configured with a user and password for secure access.<BR>
 Accessible (post-deployment) via:
 ```bash
+sudo docker ps -a # identify postgres container id
 sudo docker exec -it <container-id> psql -U postgres -d weather_db
 ```
 
@@ -116,7 +132,7 @@ For local development without Docker:
 1. Start the PostgreSQL database:
 ```bash
 pwd # should be weather_app
-docker compose up -d db
+sudo docker compose up -d db
 ```
 
 2. Run the backend (in a new terminal):

@@ -143,7 +143,14 @@ export default function Weather() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="p-6 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl shadow-md">
                 <div className="text-lg font-semibold text-primary-700 mb-2">Temperature</div>
-                <div className="text-3xl font-bold text-primary-900">{currentWeather.temperature.toFixed(1)}°C</div>
+                <div className="flex items-center">
+                  <img 
+                    src={`https://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`}
+                    alt={currentWeather.description}
+                    className="w-16 h-16"
+                  />
+                  <div className="text-3xl font-bold text-primary-900">{currentWeather.temperature.toFixed(1)}°C</div>
+                </div>
               </div>
               <div className="p-6 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl shadow-md">
                 <div className="text-lg font-semibold text-primary-700 mb-2">Humidity</div>
@@ -213,7 +220,14 @@ export default function Weather() {
                   <div className="text-lg font-semibold text-primary-700 mb-2">
                     {format(new Date(item.timestamp), 'MMM dd, HH:mm')}
                   </div>
-                  <div className="text-2xl font-bold text-primary-900 mb-2">{item.temperature.toFixed(1)}°C</div>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <img 
+                      src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                      alt={item.description}
+                      className="w-16 h-16"
+                    />
+                    <div className="text-2xl font-bold text-primary-900">{item.temperature.toFixed(1)}°C</div>
+                  </div>
                   <div className="text-lg text-primary-800 capitalize">{item.description}</div>
                 </div>
               ))}
