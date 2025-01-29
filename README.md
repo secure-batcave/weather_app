@@ -43,7 +43,7 @@ OPENWEATHER_API_KEY=your_api_key_here
 3. Start the application:
 ```bash
 pwd # should be weather_app
-sudo docker compose up -d
+sudo docker compose up --build -d
 ```
 
 Shut down the application:
@@ -51,14 +51,19 @@ Shut down the application:
 sudo docker compose down
 ```
 
-Shut down the application and remove the database container:
+Quick start after shutting down (images present from previous docker compose up build):
+```bash
+sudo docker compose up -d
+```
+
+Shut down the application and remove volumes defined in docker-compose.yml:
 ```bash
 sudo docker compose down -v
 ```
 
-Rebuild the images:
+If you for some reason run the build command a lot, you can remove the dangling images (images left behind after rebuilding):
 ```bash
-sudo docker compose up --build -d
+sudo docker image prune -f
 ```
 
 The application will be available at:

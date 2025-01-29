@@ -5,7 +5,7 @@ import requests
 from dotenv import load_dotenv
 import os
 from typing import Dict, Any, Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -113,6 +113,16 @@ async def get_historical_weather(city: str, timestamp: int, lat: float = None, l
         if not OPENWEATHER_API_KEY:
             raise WeatherAPIException("OpenWeather API key not found")
 
+        # Check if timestamp is in the future or less than 5 days ago
+        current_time = datetime.utcnow()
+        request_time = datetime.fromtimestamp(timestamp)
+        five_days_ago = current_time - timedelta(days=5)
+
+        if request_time > current_time:
+            raise WeatherAPIException("Cannot fetch weather data for future dates")
+        if request_time > current_time - timedelta(days=5):
+            raise WeatherAPIException("Historical data is only available for dates older than 5 days")
+
         params = {
             "appid": OPENWEATHER_API_KEY,
             "dt": timestamp,
@@ -149,6 +159,7 @@ async def get_historical_weather(city: str, timestamp: int, lat: float = None, l
             "humidity": weather_data["humidity"],
             "pressure": weather_data["pressure"],
             "description": weather_data["weather"][0]["description"],
+            "icon": weather_data["weather"][0]["icon"],
             "timestamp": datetime.fromtimestamp(weather_data["dt"]),
             "latitude": data["lat"],
             "longitude": data["lon"]

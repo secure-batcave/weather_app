@@ -44,6 +44,9 @@ export default function Weather() {
       // Fetch historical data for each timestamp
       const historicalPromises = timestamps.map(timestamp =>
         axios.get(`/api/weather/historical/${encodeURIComponent(city)}?timestamp=${timestamp}&lat=${lat}&lon=${lon}`)
+          .catch(err => {
+            throw new Error(err.response?.data?.detail || 'Failed to fetch historical data');
+          })
       );
 
       const responses = await Promise.all(historicalPromises);
@@ -51,7 +54,7 @@ export default function Weather() {
 
     } catch (err) {
       console.error('Error fetching historical data:', err);
-      setError(err.response?.data?.detail || 'Failed to fetch historical data');
+      setError(err.message || 'Failed to fetch historical data');
     } finally {
       setLoading(false);
     }
@@ -175,7 +178,7 @@ export default function Weather() {
               Historical Weather in {city}
             </h2>
             <p className="text-lg text-primary-600 mb-6 border-b-2 border-primary-200 pb-2">
-              {format(new Date(parseInt(start) * 1000), 'MMM dd, yyyy')} - {format(new Date(parseInt(end) * 1000), 'MMM dd, yyyy')}
+              {format(new Date(parseInt(start) * 1000).setUTCHours(0, 0, 0, 0), 'MMM dd, yyyy')} - {format(new Date(parseInt(end) * 1000).setUTCHours(23, 59, 59, 999), 'MMM dd, yyyy')}
             </p>
             <div className="grid grid-cols-1 gap-6">
               {historicalData.map((data, index) => (
@@ -184,12 +187,19 @@ export default function Weather() {
                     <div>
                       <div className="text-lg font-semibold text-primary-700 mb-2">Date</div>
                       <div className="text-xl font-bold text-primary-900">
-                        {format(new Date(data.timestamp), 'MMM dd, yyyy')}
+                        {format(new Date(data.query_timestamp), 'MMM dd, yyyy')}
                       </div>
                     </div>
                     <div>
                       <div className="text-lg font-semibold text-primary-700 mb-2">Temperature</div>
-                      <div className="text-xl font-bold text-primary-900">{data.temperature.toFixed(1)}°C</div>
+                      <div className="flex items-center">
+                        <img 
+                          src={`https://openweathermap.org/img/wn/${data.icon}@2x.png`}
+                          alt={data.description}
+                          className="w-16 h-16"
+                        />
+                        <div className="text-xl font-bold text-primary-900">{data.temperature.toFixed(1)}°C</div>
+                      </div>
                     </div>
                     <div>
                       <div className="text-lg font-semibold text-primary-700 mb-2">Humidity</div>
