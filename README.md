@@ -46,6 +46,13 @@ pwd # should be weather_app
 sudo docker compose up --build -d
 ```
 
+The application will be available at:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+- API Documentation: http://localhost:8000/docs
+
+
+4. Additional Commands
 Shut down the application:
 ```bash
 sudo docker compose down
@@ -65,11 +72,6 @@ If you for some reason run the build command a lot, you can remove the dangling 
 ```bash
 sudo docker image prune -f
 ```
-
-The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Documentation: http://localhost:8000/docs
 
 ## Project Structure
 ```
